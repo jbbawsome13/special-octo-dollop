@@ -1,44 +1,49 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const commandInput = document.getElementById('command-input');
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('input');
     const output = document.getElementById('output');
-    const prompt = '$ ';
 
-    function handleCommand(command) {
-        switch (command.trim()) {
-            case 'help':
-                return 'Available commands: help, echo [text], clear';
-            case 'clear':
-                output.innerHTML = '';
-                return '';
-            default:
-                if (command.startsWith('echo ')) {
-                    return command.slice(5);
-                }
-                return `Command not found: ${command}`;
+    const heartArt = `
+       ***   ***
+     *       *
+    *         *
+    *         *
+     *       *
+       *   *
+         *
+    `;
+
+    function displayHeartAnimation() {
+        let index = 0;
+        const heartLines = heartArt.split('\n');
+        function animateHeart() {
+            if (index < heartLines.length) {
+                output.textContent += heartLines[index] + '\n';
+                index++;
+                setTimeout(animateHeart, 500);
+            } else {
+                output.textContent += 'Heart animation complete!\n';
+                input.focus();
+            }
         }
+        animateHeart();
     }
 
-    function executeCommand() {
-        const command = commandInput.value;
-        const response = handleCommand(command);
-
-        // Display command and response
-        output.innerHTML += `<div>${prompt}${command}</div>`;
-        if (response) {
-            output.innerHTML += `<div>${response}</div>`;
-        }
-
-        // Clear the input
-        commandInput.value = '';
-
-        // Scroll to the bottom
-        output.scrollTop = output.scrollHeight;
-    }
-
-    commandInput.addEventListener('keydown', (event) => {
+    function handleCommand(event) {
         if (event.key === 'Enter') {
-            executeCommand();
-            event.preventDefault(); // Prevents form submission or other default actions
+            const command = input.value;
+            output.textContent += `> ${command}\n`;
+
+            if (command.trim() === 'animate heart') {
+                displayHeartAnimation();
+            } else {
+                output.textContent += 'Unknown command.\n';
+            }
+
+            input.value = '';
+            event.preventDefault();
         }
-    });
+    }
+
+    input.addEventListener('keydown', handleCommand);
+    output.textContent = 'Welcome to the ASCII art command line. Type "animate heart" to see the animation.\n';
 });
