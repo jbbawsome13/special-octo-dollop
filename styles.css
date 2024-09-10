@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    font-family: monospace;
+    background: black;
+    color: white;
+}
+
+#terminal {
+    padding: 20px;
+}
+
+#output {
+    white-space: pre-wrap; /* Maintains formatting */
+}
+
+#input-line {
+    display: flex;
+}
+
+#prompt {
+    color: green;
+}
+
+#command-input {
+    border: none;
+    background: black;
+    color: white;
+    outline: none;
+    width: 100%;
+}
