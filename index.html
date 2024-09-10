@@ -1,72 +1,16 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const commandInput = document.getElementById('command-input');
-    const output = document.getElementById('output');
-    const prompt = '$ ';
-
-    // Frames for ASCII art heart animation
-    const heartFrames = [
-        `
-  **     **
-**  * *  **
-**   *   **
- **     **
-   ** **
-     *
-        `,
-        `
-   **   **  
- **   *   **
-**   * *   **
-**    *    **
- **     ** 
-   ** **
-     *
-        `,
-        `
-   **   **  
- **   *   **
-**   * *   **
-**    *    **
- **     ** 
-   ** **
-     *
-        `,
-        `
-  **     **
-**  * *  **
-**   *   **
- **     **
-   ** **
-     *
-        `,
-    ];
-
-    let currentFrame = 0;
-    let animationInterval;
-
-    function startHeartAnimation() {
-        if (animationInterval) {
-            clearInterval(animationInterval);
-        }
-        
-        animationInterval = setInterval(() => {
-            const frame = heartFrames[currentFrame];
-            output.innerHTML += `<div>${frame}</div>`;
-            currentFrame = (currentFrame + 1) % heartFrames.length;
-            output.scrollTop = output.scrollHeight;
-        }, 500); // Change frame every 500 milliseconds
-    }
-
-    function handleCommand(command) {
-        switch (command.trim()) {
-            case 'help':
-                return 'Available commands: help, echo [text], clear, heart';
-            case 'clear':
-                output.innerHTML = '';
-                return '';
-            case 'heart':
-                startHeartAnimation();
-                return 'Heart animation started. Use "clear" to stop it.';
-            default:
-                if (command.startsWith('echo ')) {
-                    return
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Line with ASCII Art</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="command-line">
+        <pre id="output"></pre>
+        <input type="text" id="input" autofocus/>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
